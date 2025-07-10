@@ -42,7 +42,9 @@ return {
     opts = {
       ensure_installed = {
         "vim", "lua", "vimdoc",
-        "html", "css"
+        "html", "css", "javascript", "typescript", "json", "jsonc",
+        "python", "go", "rust", "svelte", "dart", "tsx", "jsx",
+        "bash", "yaml", "toml", "markdown", "markdown_inline"
       },
     },
   },
@@ -59,8 +61,131 @@ return {
   },
   
   -- Add Neo-tree configuration
-{
-  "nvim-tree/nvim-tree.lua",
-  opts = overrides.nvimtree,
-}
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = overrides.nvimtree,
+  },
+
+  -- GitHub Copilot (using copilot.lua for better performance)
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = "<C-J>",
+            accept_word = "<C-Right>",
+            accept_line = "<C-L>",
+            next = "<C-]>",
+            prev = "<C-[>",
+            dismiss = "<C-\\>",
+          },
+        },
+        panel = {
+          enabled = true,
+          auto_refresh = false,
+          keymap = {
+            jump_prev = "[[",
+            jump_next = "]]",
+            accept = "<CR>",
+            refresh = "gr",
+            open = "<M-CR>",
+          },
+        },
+        copilot_node_command = "node",
+      })
+    end,
+  },
+
+  -- Alternative: GitHub Copilot Chat (uncomment if you want chat functionality)
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   branch = "canary",
+  --   dependencies = {
+  --     { "github/copilot.vim" },
+  --     { "nvim-lua/plenary.nvim" },
+  --   },
+  --   config = function()
+  --     require("CopilotChat").setup()
+  --   end,
+  -- },
+
+  -- Debug Adapter Protocol
+  {
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+    },
+    config = function()
+      require "configs.dap"
+    end,
+  },
+
+  -- Telescope FZF native for better performance
+  {
+    "nvim-telescope/telescope-fzf-native.nvim",
+    build = "make",
+    config = function()
+      require("telescope").load_extension("fzf")
+    end,
+  },
+
+  -- Git integration
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup()
+    end,
+  },
+
+  -- Which key for keybinding help
+  {
+    "folke/which-key.nvim",
+    keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
+    config = function()
+      require("which-key").setup()
+    end,
+  },
+
+  -- Better diagnostics
+  {
+    "folke/trouble.nvim",
+    cmd = "Trouble",
+    config = function()
+      require("trouble").setup()
+    end,
+  },
+
+  -- Surround text objects
+  {
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end,
+  },
+
+  -- Smart commenting
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
+    end,
+  },
+
+  -- Indent guides
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    main = "ibl",
+    config = function()
+      require("ibl").setup()
+    end,
+  },
 }
