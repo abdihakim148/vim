@@ -46,6 +46,13 @@ return {
         "python", "go", "rust", "svelte", "dart", "tsx", "jsx",
         "bash", "yaml", "toml", "markdown", "markdown_inline"
       },
+      sync_install = false,
+      auto_install = true,
+      highlight = {
+        enable = true,
+        use_languagetree = true,
+      },
+      indent = { enable = true },
     },
   },
 
